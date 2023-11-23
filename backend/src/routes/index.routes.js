@@ -1,6 +1,5 @@
 const express = require("express");
 const inspectionRoutes = require("./inspection.routes.js");
-const formRoutes = require("./form.routes.js");
 const userRoutes = require("./user.routes.js");
 const authRoutes = require("./auth.routes.js");
 
@@ -31,12 +30,6 @@ router.use("/observations", (req, res, next) => {
   next();
 }, inspectionRoutes);
 
-router.use("/form", (req, res, next) => {
-  console.log(`Solicitud a la ruta /observations${req.url}`);
-  next();
-}, formRoutes);
-
 module.exports = router;
-
 
 

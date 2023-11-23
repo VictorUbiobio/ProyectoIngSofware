@@ -2,9 +2,13 @@
 
 const { handleError } = require("../utils/errorHandler");
 const Domicilio = require("../models/domicilio.model.js");
-const User = require("../models/user.model.js");
-
-
+/**
+ * @param {*} Ciudad
+ * @param {*} Calle
+ * @param {*} PDF
+ * @param {*} usuarioId
+ * @returns
+ */
 async function createDomicilio(Ciudad, Calle, PDF, usuarioId) {
   try {
     const domicilio = new Domicilio({
@@ -18,10 +22,9 @@ async function createDomicilio(Ciudad, Calle, PDF, usuarioId) {
 
     return domicilio;
   } catch (error) {
-    throw error;
+    handleError(error, "domicilio.service -> createDomicilio");
   }
 }
-
 
 /**
  * @param {Object} req - Objeto de petición
@@ -68,12 +71,12 @@ async function upload(domicilioId, pdf) {
 
     return domicilio;
   } catch (error) {
-    throw error;
+    handleError(error, "domicilio.service -> upload");
   }
 }
 
-module.exports = {
+  module.exports = {
     createDomicilio,
     updateDomicilio,
     upload,
-};
+  };

@@ -123,10 +123,33 @@ async function deleteUser(req, res) {
   }
 }
 
+/**
+ * crea un formulario
+ * @param {Object} req - Objeto de petición
+ * @param {Object} res - Objeto de respuesta
+ */
+async function createFormulario(req, res) {
+  try {
+    const { params } = req;
+    const { error: paramsError } = userIdSchema.validate(params);
+    if (paramsError) return respondError(req, res, 400, paramsError.message);
+    
+    const [user, errorUser] = await UserService.createFormulario(params.id);
+
+    if (errorUser) return respondError(req, res, 404, errorUser);
+
+    respondSuccess(req, res, 200, user);
+  } catch (error) {
+    handleError(error, "user.controller -> createFormulario");
+    respondError(req, res, 500, "No se pudo crear el formulario");
+  }
+}
+
 module.exports = {
   getUsers,
   createUser,
   getUserById,
   updateUser,
   deleteUser,
+  createFormulario,
 };
