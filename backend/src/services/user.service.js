@@ -29,7 +29,7 @@ async function getUsers() {
  */
 async function createUser(user) {
   try {
-const { username, rut, fechaDeNacimiento, email, password, roles, domicilios, formularios } = user;
+const { username, rut, fechaDeNacimiento, email, password, roles, domicilios } = user;
 
     const userFound = await User.findOne({ email: user.email });
     if (userFound) return [null, "El usuario ya existe"];
@@ -46,7 +46,6 @@ const { username, rut, fechaDeNacimiento, email, password, roles, domicilios, fo
       password: await User.encryptPassword(password),
       roles: myRole,
       domicilios,
-      formularios,
     });
     await newUser.save();
 
@@ -134,6 +133,34 @@ async function deleteUser(id) {
     handleError(error, "user.service -> deleteUser");
   }
 }
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+async function createFormulario(id, user) {
+  try {
+    const userFound = await User.findById(id);
+    if (!userFound) return [null, "El usuario no existe"];
+
+    const { nombres, apellidos, rut, nacimiento } = user;
+
+    const userUpdated = await User.findByIdAndUpdate(
+      {
+        nombres,
+        apellidos,
+        rut,
+        nacimiento,
+      },
+      { new: true },
+    );
+
+    return [userUpdated, null];
+  } catch (error) {
+    handleError(error, "user.service -> createFormulario");
+  }
+}
 
 module.exports = {
   getUsers,
@@ -141,4 +168,5 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
+  createFormulario,
 };

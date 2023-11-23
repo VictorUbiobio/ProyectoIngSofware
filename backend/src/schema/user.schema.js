@@ -13,13 +13,23 @@ const userBodySchema = Joi.object({
     "any.required": "El nombre de usuario es obligatorio.",
     "string.base": "El nombre de usuario debe ser de tipo string.",
   }),
-  rut: Joi.string().allow("").messages({
+  Nombres: Joi.string().required().messages({
+    "string.empty": "Los nombres no pueden estar vacíos.",
+    "any.required": "Los nombres son obligatorios.",
+    "string.base": "Los nombres deben ser de tipo string.",
+  }),
+  Apellidos: Joi.string().required().messages({
+    "string.empty": "Los apellidos no pueden estar vacíos.",
+    "any.required": "Los apellidos son obligatorios.",
+    "string.base": "Los apellidos deben ser de tipo string.",
+  }),
+  rut: Joi.string().required().allow("").messages({
     "string.empty": "El rut no puede estar vacío",
     "any.required": "El rut es obligatorio",
     "string.base": "El rut debe ser tipo string",
     "string.min": "El rut no contiene 9 digitos",
   }),
-  fechaDeNacimiento: Joi.date().allow(null).messages({
+  fechaDeNacimiento: Joi.date().required().allow(null).messages({
     "string.empty": "Fecha de Nacimiento vació",
     "any.required": "La Fecha de nacimiento es requerida",
     "date.base": "La fecha de Nacimiento debe ser tipo Fecha",

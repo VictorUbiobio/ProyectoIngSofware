@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    Nombres: {
+      type: String,
+    },
+    Apellidos: {
+      type: String,
+    },
     rut: {
       type: String,
       required: true,
@@ -37,12 +43,6 @@ const userSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Domicilio",
-      },
-    ],
-    Formulario: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Formulario",
       },
     ],
   },
