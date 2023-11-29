@@ -8,17 +8,14 @@ const Joi = require("joi");
 const domicilioBodySchema = Joi.object({
   Ciudad: Joi.string().messages({
     "string.empty": "La ciudad no puede estar vacia.",
-    "any.required": "La ciudad es obligatoria.",
     "string.base": "La ciudad debe ser de tipo string.",
   }),
   Calle: Joi.string().messages({
     "string.empty": "La calle no puede estar vacía.",
-    "any.required": "La calle es obligatoria.",
     "string.base": "La calle debe ser de tipo string.",
   }),
   PDF: Joi.string().messages({
     "string.empty": "PDF no puede estar vacía.",
-    "any.required": "PDF es obligatoria.",
     "string.base": "PDF debe ser de tipo string.",
   }),
 }).messages({

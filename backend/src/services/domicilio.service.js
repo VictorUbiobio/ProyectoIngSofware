@@ -52,31 +52,8 @@ async function updateDomicilio(id, domicilio) {
   }
 }
 
-/**
- * @param {Object} id - Objeto de petición
- * @param {Object}
- */
-async function upload(domicilioId, pdf) {
-  try {
-    // Buscar la inspección por el ID y actualizar el campo archivoJPG
-    const domicilio = await Domicilio.findByIdAndUpdate(
-      { _id: domicilioId },
-      { pdf },
-      { new: true },
-    );
-
-    if (!domicilio) {
-      throw new Error("Inspección no encontrada.");
-    }
-
-    return domicilio;
-  } catch (error) {
-    handleError(error, "domicilio.service -> upload");
-  }
-}
 
   module.exports = {
     createDomicilio,
     updateDomicilio,
-    upload,
   };

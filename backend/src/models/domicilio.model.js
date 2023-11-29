@@ -5,11 +5,9 @@ const domicilioSchema = new mongoose.Schema(
   {
     Ciudad: {
       type: String,
-      required: true,
     },
     Calle: {
       type: String,
-      required: true,
     },
     PDF: {
         type: String,

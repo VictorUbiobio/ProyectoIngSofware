@@ -1,29 +1,41 @@
 const multer = require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+    /**
+     * @param {*} req 
+     * @param {*} file 
+     * @param {*} cb 
+     */
+    destination: function(req, file, cb) {
+        cb(null, path.join(__dirname, "../../pdfs"));
+    },    
+    /**
+     * @param {*} req 
+     * @param {*} file 
+     * @param {*} cb 
+     */
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    },    
+});
 
 /**
- * @param {Object}
- * @param {Object}
+ * @param {*} req 
+ * @param {*} file 
+ * @param {*} cb 
  */
-function upload() {
-        const storage = multer.diskStorage({
-        destination: "./pdfs/",
-        /**
-        * @param {Object} _req - Objeto de petición
-        * @param {Object} cb
-        */
-        filename: function(_req, file, cb) {
-            const extension = file.originalname.slice(file.originalname.lastIndexOf("."));
-            const PDF = file.mimetype === "application/pdf";
-            if (PDF) {
-            cb(null, Date.now() + extension);
-            } else {
-                cb(new Error("No es un archivo PDF"));
-            }
-          },
-    });
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === "application/pdf") {
+    cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
 
-    const upload = multer({ storage: storage }).single("file");
-    return upload;
-}
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+});
 
 module.exports = upload;

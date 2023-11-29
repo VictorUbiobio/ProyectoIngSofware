@@ -5,8 +5,7 @@ const { handleError } = require("../utils/errorHandler");
 const { domicilioBodySchema, domicilioIdSchema } = require("../schema/domicilio.schema");
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const Domicilio = require("../models/domicilio.model");
-const uploadMiddleware = require("../middlewares/pdf.middleware");
-
+const asyncWrapper = require("../middlewares/asyncWrapper");
 /**
  * crea domicilio
  * @param {Object} req - Objeto de petición
@@ -64,43 +63,40 @@ async function updateDomicilio(req, res) {
 }
 
 /**
- * @param {Object} req - Objeto de petición
- * @param {Object} res - Objeto de respuesta
+ * @param {*} req
+ * @param {*} res
  */
-async function uploadPDF(req, res) {
+const uploadPDF = asyncWrapper(async (req, res) => {
   try {
-    uploadMiddleware(req, res, async function(err) {
-      if (err) {
-        return res.status(400).json({ error: "Error al cargar el pdf." });
-      }
-
-      const { domicilioId } = req.params;
-      const pdf = req.body.fileName;
-
-      const upload = await Domicilio.findByIdAndUpdate(
-        { _id: domicilioId },
-        { pdf },
-        { new: true },
-      );
-
-      if (!upload) {
-        return res.status(404).json({ error: "inspecion no encontrada." });
-      }
-
-      return res.status(200).json({
-        message: "Archivo subido y asociado a la domicilio.",
-        updatedPDF: pdf,
-      });
-    });
+      const { name } = req.body;
+      const file = req.file.path;
+      const pdf = await Domicilio.create({ name, file });
+      res.status(201).json({ pdf });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Error al cargar pdf." });
+      console.error(error);
+      res.status(500).json({ error: "Error en el servidor" });
   }
-}
+});
+
+
+/**
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getDomicilios = async (req, res) => {
+  try {
+      const domicilios = await Domicilio.find();
+      res.status(200).json({ domicilios });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error en el servidor" });
+  }
+};
 
 module.exports = {
     createDomicilio,
     updateDomicilio,
     uploadPDF,
+    getDomicilios,
 };
 
