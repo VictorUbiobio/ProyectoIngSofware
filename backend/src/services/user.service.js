@@ -144,9 +144,14 @@ async function createFormulario(id, user) {
     const userFound = await User.findById(id);
     if (!userFound) return [null, "El usuario no existe"];
 
+    if (!user) {
+      return [null, "El objeto 'user' no está definido"];
+    }
+
     const { nombres, apellidos, rut, nacimiento } = user;
 
     const userUpdated = await User.findByIdAndUpdate(
+      id,
       {
         nombres,
         apellidos,
