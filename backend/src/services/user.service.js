@@ -29,10 +29,10 @@ async function getUsers() {
  */
 async function createUser(user) {
   try {
-const { username, rut, fechaDeNacimiento, email, password, roles, domicilios } = user;
+const { username, rut, email, password, roles } = user;
 
     const userFound = await User.findOne({ email: user.email });
-    if (userFound) return [null, "El usuario ya existe"];
+    if (userFound) return [null, "El usuario existe"];
 
     const rolesFound = await Role.find({ name: { $in: roles } });
     if (rolesFound.length === 0) return [null, "El rol no existe"];
@@ -40,12 +40,10 @@ const { username, rut, fechaDeNacimiento, email, password, roles, domicilios } =
 
     const newUser = new User({
       username,
-      rut,
-      fechaDeNacimiento,
+      rut: checkRut(rut),
       email,
       password: await User.encryptPassword(password),
       roles: myRole,
-      domicilios,
     });
     await newUser.save();
 
@@ -139,31 +137,25 @@ async function deleteUser(id) {
  * @param {*} res 
  * @returns 
  */
-async function createFormulario(id, user) {
+async function createFormulario(id, formulario) {
   try {
-    const userFound = await User.findById(id);
-    if (!userFound) return [null, "El usuario no existe"];
+    const user = await User.findById(id);
 
     if (!user) {
-      return [null, "El objeto 'user' no está definido"];
+      return [null, "El usuario no existe"];
     }
+    // Actualizar el usuario con los nuevos atributos del formulario
+    user.Nombres = formulario.Nombres;
+    user.Apellidos = formulario.Apellidos;
+    user.fechaDeNacimiento = formulario.fechaDeNacimiento;
 
-    const { nombres, apellidos, rut, nacimiento } = user;
+    // Guardar el usuario actualizado en la base de datos
+    await user.save();
 
-    const userUpdated = await User.findByIdAndUpdate(
-      id,
-      {
-        nombres,
-        apellidos,
-        rut,
-        nacimiento,
-      },
-      { new: true },
-    );
-
-    return [userUpdated, null];
+    return [user, null];
   } catch (error) {
     handleError(error, "user.service -> createFormulario");
+    return [null, "Error al actualizar el formulario"];
   }
 }
 

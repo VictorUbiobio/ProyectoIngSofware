@@ -12,5 +12,14 @@ router.post("/", (req, res) => {
   });
 router.put("/:DomicilioId", domiciliocontroller.updateDomicilio);
 router.route("/:DomicilioId/upload")
-        .get(getDomicilios).post(upload.single("file"), uploadPDF);
+    .get(getDomicilios)
+    .post((req, res, next) => {
+        upload.single("file")(req, res, function(err) {
+            if (err) {
+                return res.status(400).json({ error: err.message });
+            }
+            next();
+        });
+    }, uploadPDF);
+
 module.exports = router;

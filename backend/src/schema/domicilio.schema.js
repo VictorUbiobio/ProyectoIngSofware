@@ -7,7 +7,7 @@ const Joi = require("joi");
  */
 const domicilioBodySchema = Joi.object({
   Ciudad: Joi.string().messages({
-    "string.empty": "La ciudad no puede estar vacia.",
+    "string.empty": "La ciudad no puede estar vacía.",
     "string.base": "La ciudad debe ser de tipo string.",
   }),
   Calle: Joi.string().messages({

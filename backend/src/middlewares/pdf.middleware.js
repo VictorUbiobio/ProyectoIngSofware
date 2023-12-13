@@ -16,8 +16,9 @@ const storage = multer.diskStorage({
      * @param {*} cb 
      */
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
-    },    
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname));
+    },
 });
 
 /**
@@ -27,9 +28,9 @@ const storage = multer.diskStorage({
  */
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === "application/pdf") {
-    cb(null, true);
+        cb(null, true);
     } else {
-        cb(null, false);
+        cb(new Error("Invalid file type. Only PDF files are allowed."), false);
     }
 };
 
@@ -39,3 +40,4 @@ const upload = multer({
 });
 
 module.exports = upload;
+

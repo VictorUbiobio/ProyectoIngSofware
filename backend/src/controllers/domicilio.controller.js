@@ -45,7 +45,7 @@ async function createDomicilio(req, res) {
 async function updateDomicilio(req, res) {
   try {
     const { params, body } = req;
-    const { error: paramsError } = domicilioIdSchema.validate(params);
+    const { error: paramsError } = domicilioIdSchema.validate(params._id);
     if (paramsError) return respondError(req, res, 400, paramsError.message);
 
     const { error: bodyError } = domicilioBodySchema.validate(body);

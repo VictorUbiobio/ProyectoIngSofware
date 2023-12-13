@@ -2,7 +2,7 @@
 
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const UserService = require("../services/user.service");
-const { userBodySchema, userIdSchema } = require("../schema/user.schema");
+const { FormBodySchema, userIdSchema } = require("../schema/user.schema");
 const { handleError } = require("../utils/errorHandler");
 
 /**
@@ -131,12 +131,14 @@ async function deleteUser(req, res) {
 async function createFormulario(req, res) {
   try {
     const { params, body } = req;
-    const { error: paramsError } = userIdSchema.validate(params);
-    if (paramsError) return respondError(req, res, 400, paramsError.message);
+    const { error: bodyError } = FormBodySchema.validate(body);
+    if (bodyError) return respondError(req, res, 400, bodyError.message);
 
     const [user, errorUser] = await UserService.createFormulario(params.id, body);
 
-    if (errorUser) return respondError(req, res, 404, errorUser);
+    if (errorUser) {
+      return respondError(req, res, 404, errorUser);
+    }
 
     respondSuccess(req, res, 200, user);
   } catch (error) {

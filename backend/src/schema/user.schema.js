@@ -13,26 +13,11 @@ const userBodySchema = Joi.object({
     "any.required": "El nombre de usuario es obligatorio.",
     "string.base": "El nombre de usuario debe ser de tipo string.",
   }),
-  Nombres: Joi.string().required().messages({
-    "string.empty": "Los nombres no pueden estar vacíos.",
-    "any.required": "Los nombres son obligatorios.",
-    "string.base": "Los nombres deben ser de tipo string.",
-  }),
-  Apellidos: Joi.string().required().messages({
-    "string.empty": "Los apellidos no pueden estar vacíos.",
-    "any.required": "Los apellidos son obligatorios.",
-    "string.base": "Los apellidos deben ser de tipo string.",
-  }),
   rut: Joi.string().required().allow("").messages({
     "string.empty": "El rut no puede estar vacío",
     "any.required": "El rut es obligatorio",
     "string.base": "El rut debe ser tipo string",
     "string.min": "El rut no contiene 9 digitos",
-  }),
-  fechaDeNacimiento: Joi.date().required().allow(null).messages({
-    "string.empty": "Fecha de Nacimiento vació",
-    "any.required": "La Fecha de nacimiento es requerida",
-    "date.base": "La fecha de Nacimiento debe ser tipo Fecha",
   }),
   password: Joi.string().required().min(5).messages({
     "string.empty": "La contraseña no puede estar vacía.",
@@ -64,6 +49,26 @@ const userBodySchema = Joi.object({
   "object.unknown": "No se permiten atributos adicionales.",
 });
 
+const FormBodySchema = Joi.object({
+  Nombres: Joi.string().required().messages({
+    "string.empty": "Los nombres no pueden estar vacíos.",
+    "any.required": "Los nombres son obligatorios.",
+    "string.base": "Los nombres deben ser de tipo string.",
+  }),
+  Apellidos: Joi.string().required().messages({
+    "string.empty": "Los apellidos no pueden estar vacíos.",
+    "any.required": "Los apellidos son obligatorios.",
+    "string.base": "Los apellidos deben ser de tipo string.",
+  }),
+  fechaDeNacimiento: Joi.date().required().allow(null).messages({
+    "string.empty": "Fecha de Nacimiento vació",
+    "any.required": "La Fecha de nacimiento es requerida",
+    "date.base": "La fecha de Nacimiento debe ser tipo Fecha",
+  }),
+}).messages({
+  "object.unknown": "No se permiten atributos adicionales.",
+});
+
 /**
  * Esquema de validación para el id de usuario.
  * @constant {Object}
@@ -80,4 +85,4 @@ const userIdSchema = Joi.object({
     }),
 });
 
-module.exports = { userBodySchema, userIdSchema };
+module.exports = { userBodySchema, userIdSchema, FormBodySchema };
