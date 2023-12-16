@@ -24,7 +24,7 @@ const meetBodySchema = Joi.object({
   .required()
   .min(5)
   .max(5)
-  .pattern(/^([89]|1[0-7]):[0-5][0-9]$/)
+  .pattern(/^([01]?[0-9]|2[0-3]):00$/)
   .messages({
     "string.empty": "La hora no puede estar vacía.",
     "any.required": "La hora es obligatoria.",
