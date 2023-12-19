@@ -1,4 +1,3 @@
-import React from 'react';
 import ReguForm from '../components/ReguForm';
 import DomicilioForm from '../components/DomicilioForm';
 
