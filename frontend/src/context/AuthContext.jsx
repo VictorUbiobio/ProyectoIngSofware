@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
 
-// eslint-disable-next-line react/prop-types
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
+  // Obtiene el usuario del localStorage
   const user = JSON.parse(localStorage.getItem('user')) || '';
   const isAuthenticated = user ? true : false;
 

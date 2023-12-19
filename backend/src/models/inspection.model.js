@@ -4,6 +4,7 @@ const inspectionSchema = new mongoose.Schema({
   lugar: String,
   fecha: Date,
   observaciones: String,
+  rol: String,
   inspector: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   estado: {
     type: String,

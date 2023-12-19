@@ -10,7 +10,8 @@ import CreateMeet from './routes/Meets/createMeet.jsx';
 import DetailsMeet from './routes/Meets/DetailsMeet.jsx';
 import DeleteMeet from './routes/Meets/DeleteMeet.jsx';
 import EditMeet from './routes/Meets/EditMeet.jsx';
-
+import InspeccionesLista from './routes/InspeccionesLista.jsx';
+import ModificarInspeccion from './routes/ModificarInspeccion.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/meets',
-        element: <Meet />,      
+        element: <Meet />,
+      },
+      {
+        path: '/inspector/:inspectorId',
+        element: <InspeccionesLista />,
+      },
+      {
+        path: '/inspecciones/:inspectionId',
+        element: <ModificarInspeccion />
       },
       {
         path: '/meets/:meetId',

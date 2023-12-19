@@ -6,12 +6,13 @@ const { respondSuccess, respondError } = require("../utils/resHandler");
 const multer = require("multer");
 const { inspectionBodySchema } = require("../schema/inspection.schema");
 const uploadMiddleware = require("../middlewares/archivo.middleware");
+const verifyJWT = require('../middlewares/authentication.middleware');
 
 
 // Función para crear una nueva inspección y asignarla a un inspector
 async function createInspection(req, res) {
   try {
-    const { lugar, fecha, observaciones, inspectorId } = req.body;
+    const { lugar, fecha, observaciones,rol , inspectorId } = req.body;
 
     // Validar los datos usando el esquema de validación
     const { error } = inspectionBodySchema.validate({
@@ -29,6 +30,7 @@ async function createInspection(req, res) {
       lugar,
       fecha,
       observaciones,
+      rol,
       inspector: inspectorId,
     });
 
@@ -103,23 +105,76 @@ async function changeInspectionStatus(req, res) {
   }
 }
 
-async function getInspectionsByInspectorId(req, res) {
+const getInspectionInfo = async (req, res) => {
+  try {
+    const { inspectionId } = req.params;
+    const inspection = await inspectionService.getInspectionInfo(inspectionId);
+
+    if (!inspection) {
+      return res.status(404).json({ error: 'Inspección no encontrada' });
+    }
+
+    // Responder con los detalles de la inspección
+    respondSuccess(req, res, 200, inspection);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error al obtener detalles de la inspección.' });
+  }
+};
+
+
+const getInspectionsByInspectorId = async (req, res) => {
   try {
     const { inspectorId } = req.params;
+    const inspections = await Inspection.find({ inspector: inspectorId });
 
-    // Llama a la función del servicio para obtener inspecciones por el inspectorId
-    const inspection = await Inspection.find({ inspector: inspectorId });
+    if (!inspections) {
+      return respondError(req, res, 404, "Inspections not found.");
+    }
 
-    // Devuelve las inspecciones como respuesta
-    respondSuccess(req, res, 201, inspection);
-    //return res.status(200).json(inspections);
+    return respondSuccess(req, res, 200, inspections);
   } catch (error) {
-    handleError(error, "inspection.controller -> getInspectionsByInspectorId");
-    respondError(req, res, 500, "Error al obtener las inspecciones del inspector.");
-    //console.error(error);
-    //return res.status(500).json({ error: "Error al obtener las inspecciones del inspector." });
+    console.error(error); // Imprime el error en la consola del servidor
+    respondError(req, res, 500, "Internal Server Error.");
+  }
+};
+
+
+const getInspectionsByRol = async (req, res) => {
+  try {
+    const { rol } = req.params;
+    const inspections = await Inspection.find({ rol });
+
+    if (!inspections) {
+      return respondError(req, res, 404, "Inspections not found.");
+    }
+
+    return respondSuccess(req, res, 200, inspections);
+  } catch (error) {
+    console.error(error);
+    respondError(req, res, 500, "Internal Server Error.");
+  }
+};
+
+// controllers/userController.js
+
+// Función para obtener el ID del usuario
+async function getUserId(req, res) {
+  try {
+    // Accede al ID del usuario desde req.email o req.roles si es necesario
+    const userId = req.email || req.roles[0]._id;
+
+    // Envía el ID del usuario como respuesta
+    res.status(200).json({ userId });
+  } catch (error) {
+    // Manejo de errores
+    console.error('Error al obtener el ID del usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 }
+
+
+
 
 async function uploadJPG(req, res) {
   try {
@@ -152,13 +207,41 @@ async function uploadJPG(req, res) {
   }
 }
 
+const getInspectionDetailsById = async (req, res) => {
+  try {
+    const { inspectionId } = req.params;
+
+    // Validar el ID de la inspección
+    if (!mongoose.Types.ObjectId.isValid(inspectionId)) {
+      return res.status(400).json({ error: 'ID de inspección no válido' });
+    }
+
+    // Buscar la inspección por el ID en la base de datos
+    const inspection = await Inspection.findById(inspectionId);
+
+    if (!inspection) {
+      return res.status(404).json({ error: 'Inspección no encontrada' });
+    }
+
+    // Responder con los detalles de la inspección
+    res.status(200).json(inspection);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener detalles de la inspección.' });
+  }
+};
+
 
 module.exports = {
   createInspection,
   addObservations,
   changeInspectionStatus,
   getInspectionsByInspectorId,
-  uploadJPG
+  uploadJPG,
+  getInspectionsByRol,
+  getUserId,
+  getInspectionInfo,
+  getInspectionDetailsById,
 };
 
 

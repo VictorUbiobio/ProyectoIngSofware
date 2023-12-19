@@ -1,9 +1,9 @@
 "use strict";
 
-/** Modelo de datos 'User' */
+/ Modelo de datos 'User' */
 const User = require("../models/user.model.js");
 
-/** Modulo 'jsonwebtoken' para crear tokens */
+/ Modulo 'jsonwebtoken' para crear tokens */
 const jwt = require("jsonwebtoken");
 
 const {
@@ -14,11 +14,12 @@ const {
 const { handleError } = require("../utils/errorHandler");
 
 /**
- * Inicia sesión con un usuario.
- * @async
- * @function login
- * @param {Object} user - Objeto de usuario
- */
+ 
+Inicia sesión con un usuario.
+@async
+@function login
+@param {Object} user - Objeto de usuario
+*/
 async function login(user) {
   try {
     const { email, password } = user;
@@ -29,8 +30,7 @@ async function login(user) {
     if (!userFound) {
       return [null, null, "El usuario y/o contraseña son incorrectos"];
     }
-
-    const matchPassword = await User.comparePassword(
+const matchPassword = await User.comparePassword(
       password,
       userFound.password,
     );
@@ -62,11 +62,12 @@ async function login(user) {
 }
 
 /**
- * Refresca el token de acceso
- * @async
- * @function refresh
- * @param {Object} cookies - Objeto de cookies
- */
+ 
+Refresca el token de acceso
+@async
+@function refresh
+@param {Object} cookies - Objeto de cookies
+*/
 async function refresh(cookies) {
   try {
     if (!cookies.jwt) return [null, "No hay autorización"];
