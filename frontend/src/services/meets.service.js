@@ -35,27 +35,3 @@ export const createMeet = async (meet) => {
         console.error(error);
     }
 }
-
-export const updateMeet = async (id, meet) => {
-    try {
-        const response = await axios.put(`/meet/${id}`, meet);
-        if (response.status === 200) {
-            return response.data.data;
-        }
-        return null;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-export const deleteMeet = async (id) => {
-    try {
-        const response = await axios.delete(`/meet/${id}`);
-        if (response.status === 200) {
-            return response.data.data;
-        }
-        return null;
-    } catch (error) {
-        console.error(error);
-    }
-}

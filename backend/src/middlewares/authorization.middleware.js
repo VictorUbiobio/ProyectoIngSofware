@@ -32,10 +32,6 @@ async function isAdmin(req, res, next) {
   }
 }
 
-/**
- * Comprueba si el usuario es inspector
- * @param {Object} req - Objeto de petición
- */
 async function isInspector(req, res, next) {
   try {
     const user = await User.findOne({ email: req.email });
@@ -57,33 +53,7 @@ async function isInspector(req, res, next) {
   }
 }
 
-/**
- * Comprueba si el usuario es inspector o administrador
- * @param {Object} req - Objeto de petición
- */
-async function isInspectorOrAdmin(req, res, next) {
-  try {
-    const user = await User.findOne({ email: req.email });
-    const roles = await Role.find({ _id: { $in: user.roles } });
-    for (let i = 0; i < roles.length; i++) {
-      if (roles[i].name === "inspector" || roles[i].name === "admin") {
-        next();
-        return;
-      }
-    }
-    return respondError(
-      req,
-      res,
-      401,
-      "Se requiere un rol de inspector o administrador para realizar esta acción",
-    );
-  } catch (error) {
-    handleError(error, "authorization.middleware -> isInspectorOrAdmin");
-  }
-}
-
 module.exports = {
   isAdmin,
-  isInspector,
-  isInspectorOrAdmin,
+  isInspector
 };
