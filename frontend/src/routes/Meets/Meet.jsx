@@ -14,7 +14,6 @@ const Meets = () => {
 
     return (
         <>
-            <Link to='/meets/create'>Crear Nuevo </Link>
             <ul>
                 {meets.map((meet) => (
                     <li key={meet._id}><br/><Link to={`/meets/${meet._id}`}>

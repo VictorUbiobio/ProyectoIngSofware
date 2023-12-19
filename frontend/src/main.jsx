@@ -9,6 +9,7 @@ import './index.css';
 import CreateMeet from './routes/Meets/createMeet.jsx';
 import DetailsMeet from './routes/Meets/DetailsMeet.jsx';
 import DeleteMeet from './routes/Meets/DeleteMeet.jsx';
+import EditMeet from './routes/Meets/EditMeet.jsx';
 
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: '/meets/delete/:meetId',
         element: <DeleteMeet />,
+      },
+      {
+        path: '/meets/update/:meetId',
+        element: <EditMeet />,
       },
     ],
   },
