@@ -9,7 +9,7 @@ import './index.css';
 import CreateMeet from './routes/Meets/createMeet.jsx';
 import DetailsMeet from './routes/Meets/DetailsMeet.jsx';
 import DeleteMeet from './routes/Meets/DeleteMeet.jsx';
-import FormRegu from './routes/FormRegu.jsx';
+import EditMeet from './routes/Meets/EditMeet.jsx';
 
 
 const router = createBrowserRouter([
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/meets',
-        element: <Meet />,
+        element: <Meet />,      
       },
       {
         path: '/meets/:meetId',
@@ -36,13 +36,13 @@ const router = createBrowserRouter([
       },
       {
         path: '/meets/delete/:meetId',
-        element: <DeleteMeet/>,
+        element: <DeleteMeet />,
       },
       {
-        path: '/FormularioRegularizacion',
-        element: <FormRegu/>,
+        path: '/meets/update/:meetId',
+        element: <EditMeet />,
       },
-    ]
+    ],
   },
   {
     path: '/auth',
