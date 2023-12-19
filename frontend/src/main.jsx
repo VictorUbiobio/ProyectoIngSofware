@@ -5,8 +5,12 @@ import Root from './routes/Root.jsx';
 import ErrorPage from './routes/ErrorPage.jsx';
 import Login from './routes/Login.jsx';
 import Meet from './routes/Meets/Meet.jsx';
+import './index.css';
 import CreateMeet from './routes/Meets/createMeet.jsx';
 import DetailsMeet from './routes/Meets/DetailsMeet.jsx';
+import DeleteMeet from './routes/Meets/DeleteMeet.jsx';
+import EditMeet from './routes/Meets/EditMeet.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -20,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/meets',
-        element: <Meet />,        
+        element: <Meet />,      
       },
       {
         path: '/meets/:meetId',
@@ -29,6 +33,14 @@ const router = createBrowserRouter([
       {
         path: '/meets/create',
         element: <CreateMeet />,
+      },
+      {
+        path: '/meets/delete/:meetId',
+        element: <DeleteMeet />,
+      },
+      {
+        path: '/meets/update/:meetId',
+        element: <EditMeet />,
       },
     ],
   },

@@ -15,7 +15,7 @@ const router = express.Router();
 router.use("/users", authenticationMiddleware, userRoutes);
 router.use("/auth", authRoutes);
 // Define las rutas para las citas /api/meets
-router.use("/meet", meetRoutes);
+router.use("/meet", authenticationMiddleware, meetRoutes);
 
 // Aplica el middleware de autenticación a las rutas "/inspections" y "/observations"
 router.use(["/inspections", "/observations"], authenticationMiddleware);
