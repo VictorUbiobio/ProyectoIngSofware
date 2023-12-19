@@ -1,6 +1,6 @@
 import axios from './root.service';
 
-export const getUsers = async () => {
+export const getDomicilios = async () => {
     try {
         const response = await axios.get('/');
         if (response.status === 200) {
@@ -12,21 +12,9 @@ export const getUsers = async () => {
     }
 }
 
-export const getUser = async (id) => {
+export const createDomicilio = async (domicilio) => {
     try {
-        const response = await axios.get(`/${id}`);
-        if (response.status === 200) {
-            return response.data.data;
-        }
-        return {};
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-export const createUser = async (user) => {
-    try {
-        const response = await axios.post('/', user);
+        const response = await axios.post('/', domicilio);
         if (response.status === 200) {
             return response.data.data;
         }
@@ -36,21 +24,9 @@ export const createUser = async (user) => {
     }
 }
 
-export const createFormulario = async (id, user) => {
+export const updateDomicilio = async (id, domicilio) => {
     try {
-        const response = await axios.post(`/${id}/form`, user);
-        if (response.status === 200) {
-            return response.data.data;
-        }
-        return null;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-export const updateUser = async (id, user) => {
-    try {
-        const response = await axios.put(`/${id}`, user);
+        const response = await axios.put(`/${id}`, domicilio);
         if (response.status === 200) {
             return response.data.data;
         }
@@ -63,6 +39,18 @@ export const updateUser = async (id, user) => {
 export const deleteUser = async (id) => {
     try {
         const response = await axios.delete(`/${id}`);
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        return null;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const uploadPDF = async (id, file) => {
+    try {
+        const response = await axios.post(`/${id}/upload`, file);
         if (response.status === 200) {
             return response.data.data;
         }

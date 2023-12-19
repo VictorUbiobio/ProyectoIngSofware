@@ -1,8 +1,8 @@
 import axios from './root.service';
 
-export const getUsers = async () => {
+export const getMeets = async () => {
     try {
-        const response = await axios.get('/');
+        const response = await axios.get('/meet');
         if (response.status === 200) {
             return response.data.data;
         }
@@ -12,9 +12,9 @@ export const getUsers = async () => {
     }
 }
 
-export const getUser = async (id) => {
+export const getMeet = async (id) => {
     try {
-        const response = await axios.get(`/${id}`);
+        const response = await axios.get(`/meet/${id}`);
         if (response.status === 200) {
             return response.data.data;
         }
@@ -24,9 +24,9 @@ export const getUser = async (id) => {
     }
 }
 
-export const createUser = async (user) => {
+export const createMeet = async (meet) => {
     try {
-        const response = await axios.post('/', user);
+        const response = await axios.post('/meet', meet);
         if (response.status === 200) {
             return response.data.data;
         }
@@ -36,9 +36,9 @@ export const createUser = async (user) => {
     }
 }
 
-export const createFormulario = async (id, user) => {
+export const updateMeet = async (id, meet) => {
     try {
-        const response = await axios.post(`/${id}/form`, user);
+        const response = await axios.put(`/meet/${id}`, meet);
         if (response.status === 200) {
             return response.data.data;
         }
@@ -48,21 +48,9 @@ export const createFormulario = async (id, user) => {
     }
 }
 
-export const updateUser = async (id, user) => {
+export const deleteMeet = async (id) => {
     try {
-        const response = await axios.put(`/${id}`, user);
-        if (response.status === 200) {
-            return response.data.data;
-        }
-        return null;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-export const deleteUser = async (id) => {
-    try {
-        const response = await axios.delete(`/${id}`);
+        const response = await axios.delete(`/meet/${id}`);
         if (response.status === 200) {
             return response.data.data;
         }
