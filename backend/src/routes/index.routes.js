@@ -5,9 +5,9 @@ const authRoutes = require("./auth.routes.js");
 
 
 /** Enrutador de citas */
-const meetRoutes = require("./meet.routes.js"); 
+const meetRoutes = require("./meet.routes.js");
 
-/** Middleware de autenticación */
+/** Middleware de autenticaci  n */
 const authenticationMiddleware = require("../middlewares/authentication.middleware.js");
 
 const router = express.Router();
@@ -15,9 +15,9 @@ const router = express.Router();
 router.use("/users", authenticationMiddleware, userRoutes);
 router.use("/auth", authRoutes);
 // Define las rutas para las citas /api/meets
-router.use("/meet", meetRoutes);
+router.use("/meet", authenticationMiddleware, meetRoutes);
 
-// Aplica el middleware de autenticación a las rutas "/inspections" y "/observations"
+// Aplica el middleware de autenticaci  n a las rutas "/inspections" y "/observations"
 router.use(["/inspections", "/observations"], authenticationMiddleware);
 
 router.use("/inspections", (req, res, next) => {
@@ -31,5 +31,3 @@ router.use("/observations", (req, res, next) => {
 }, inspectionRoutes);
 
 module.exports = router;
-
-

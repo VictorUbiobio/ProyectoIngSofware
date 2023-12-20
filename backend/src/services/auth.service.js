@@ -1,9 +1,9 @@
 "use strict";
 
-/ Modelo de datos 'User' */
+/**  Modelo de datos 'User' **/
 const User = require("../models/user.model.js");
 
-/ Modulo 'jsonwebtoken' para crear tokens */
+/** Modulo 'jsonwebtoken' para crear tokens **/
 const jwt = require("jsonwebtoken");
 
 const {
@@ -14,8 +14,8 @@ const {
 const { handleError } = require("../utils/errorHandler");
 
 /**
- 
-Inicia sesión con un usuario.
+
+Inicia sesi  n con un usuario.
 @async
 @function login
 @param {Object} user - Objeto de usuario
@@ -28,7 +28,7 @@ async function login(user) {
       .populate("roles")
       .exec();
     if (!userFound) {
-      return [null, null, "El usuario y/o contraseña son incorrectos"];
+      return [null, null, "El usuario y/o contrase  a son incorrectos"];
     }
 const matchPassword = await User.comparePassword(
       password,
@@ -36,7 +36,7 @@ const matchPassword = await User.comparePassword(
     );
 
     if (!matchPassword) {
-      return [null, null, "El usuario y/o contraseña son incorrectos"];
+      return [null, null, "El usuario y/o contrase  a son incorrectos"];
     }
 
     const accessToken = jwt.sign(
@@ -45,67 +45,68 @@ const matchPassword = await User.comparePassword(
       {
         expiresIn: "1d",
       },
-    );
+      );
 
-    const refreshToken = jwt.sign(
-      { email: userFound.email },
-      REFRESH_JWT_SECRET,
-      {
-        expiresIn: "7d", // 7 días
-      },
-    );
-
-    return [accessToken, refreshToken, null];
-  } catch (error) {
-    handleError(error, "auth.service -> signIn");
+      const refreshToken = jwt.sign(
+        { email: userFound.email },
+        REFRESH_JWT_SECRET,
+        {
+          expiresIn: "7d", // 7 d  as
+        },
+      );
+  
+      return [accessToken, refreshToken, null];
+    } catch (error) {
+      handleError(error, "auth.service -> signIn");
+    }
   }
-}
-
-/**
- 
-Refresca el token de acceso
-@async
-@function refresh
-@param {Object} cookies - Objeto de cookies
-*/
-async function refresh(cookies) {
-  try {
-    if (!cookies.jwt) return [null, "No hay autorización"];
-    const refreshToken = cookies.jwt;
-
-    const accessToken = await jwt.verify(
-      refreshToken,
-      REFRESH_JWT_SECRET,
-      async (err, user) => {
-        if (err) return [null, "La sesion a caducado, vuelva a iniciar sesion"];
-
-        const userFound = await User.findOne({
-          email: user.email,
-        })
-          .populate("roles")
-          .exec();
-
-        if (!userFound) return [null, "No usuario no autorizado"];
-
-        const accessToken = jwt.sign(
-          { email: userFound.email, roles: userFound.roles, id: userFound._id },
-          ACCESS_JWT_SECRET,
-          {
-            expiresIn: "1d",
+  
+  /**
+  
+  Refresca el token de acceso
+  @async
+  @function refresh
+  @param {Object} cookies - Objeto de cookies
+  */
+  async function refresh(cookies) {
+    try {
+      if (!cookies.jwt) return [null, "No hay autorizaci  n"];
+      const refreshToken = cookies.jwt;
+  
+      const accessToken = await jwt.verify(
+        refreshToken,
+        REFRESH_JWT_SECRET,
+        async (err, user) => {
+          if (err) return [null, "La sesion a caducado, vuelva a iniciar sesion"];
+  
+          const userFound = await User.findOne({
+            email: user.email,
+          })
+            .populate("roles")
+            .exec();
+  
+          if (!userFound) return [null, "No usuario no autorizado"];
+  
+          const accessToken = jwt.sign(
+            { email: userFound.email, roles: userFound.roles, id: userFound._id },
+            ACCESS_JWT_SECRET,
+            {
+              expiresIn: "1d",
+            },
+            );
+    
+            return [accessToken, null];
           },
         );
+    
+        return accessToken;
+      } catch (error) {
+        handleError(error, "auth.service -> refresh");
+      }
+    }
+    
+    module.exports = {
+      login,
+      refresh,
+    };
 
-        return [accessToken, null];
-      },
-    );
-
-    return accessToken;
-  } catch (error) {
-    handleError(error, "auth.service -> refresh");
-  }
-}
-
-module.exports = {
-  login,
-  refresh,
-};

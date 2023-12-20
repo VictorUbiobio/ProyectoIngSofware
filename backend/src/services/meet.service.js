@@ -12,7 +12,7 @@ async function getMeet() {
     try {
         const meets = await Meet.find().exec();
         if (!meets) return [null, "No hay citas"];
-    
+
         return [meets, null];
     } catch (error) {
         handleError(error, "meet.service -> getMeet");
@@ -28,7 +28,7 @@ async function getMeetById(id) {
     try {
         const meet = await Meet.findById(id).exec();
         if (!meet) return [null, "No existe la cita"];
-    
+
         return [meet, null];
     } catch (error) {
         handleError(error, "meet.service -> getMeetById");
@@ -43,11 +43,11 @@ async function getMeetById(id) {
 async function postMeet(meet) {
   try {
     const { date, hour, motive, state, user } = meet;
-    
+
     const existingMeet = await Meet.findOne({ date, hour });
 
     if (existingMeet) {
-      return [null, "La hora ya está ocupada"];
+      return [null, "La hora ya est   ocupada"];
     }
 
     const newMeet = new Meet({
@@ -58,7 +58,7 @@ async function postMeet(meet) {
       user,
       regist: Date.now(),
     });
-    
+
     const userMail = await User.findById(meet.user);
 
     if (!userMail) {
@@ -128,7 +128,7 @@ async function deleteMeet(id) {
   try {
     const meet = await Meet.findByIdAndDelete(id).exec();
     if (!meet) return [null, "No existe la cita"];
-
+    
     return [meet, null];
   } catch (error) {
     handleError(error, "meet.service -> deleteMeet");
@@ -144,3 +144,4 @@ module.exports = {
     deleteMeet,
     putMeet,
   };
+  

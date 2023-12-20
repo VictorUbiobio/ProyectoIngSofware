@@ -7,9 +7,9 @@ const { handleError } = require("../utils/errorHandler.js");
 
 /**
  * Comprueba si el usuario es administrador
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
- * @param {Function} next - Función para continuar con la siguiente función
+ * @param {Function} next - Funci  n para continuar con la siguiente funci  n
  */
 async function isAdmin(req, res, next) {
   try {
@@ -25,13 +25,17 @@ async function isAdmin(req, res, next) {
       req,
       res,
       401,
-      "Se requiere un rol de administrador para realizar esta acción",
+      "Se requiere un rol de administrador para realizar esta acci  n",
     );
   } catch (error) {
     handleError(error, "authorization.middleware -> isAdmin");
   }
 }
 
+/**
+ * Comprueba si el usuario es inspector
+ * @param {Object} req - Objeto de petici  n
+ */
 async function isInspector(req, res, next) {
   try {
     const user = await User.findOne({ email: req.email });
@@ -46,14 +50,40 @@ async function isInspector(req, res, next) {
       req,
       res,
       401,
-      "Se requiere un rol de inspector para realizar esta acción",
+      "Se requiere un rol de inspector para realizar esta acci  n",
     );
   } catch (error) {
     handleError(error, "authorization.middleware -> isInspector");
   }
 }
 
+/**
+ * Comprueba si el usuario es inspector o administrador
+ * @param {Object} req - Objeto de petici  n
+ */
+async function isInspectorOrAdmin(req, res, next) {
+  try {
+    const user = await User.findOne({ email: req.email });
+    const roles = await Role.find({ _id: { $in: user.roles } });
+    for (let i = 0; i < roles.length; i++) {
+      if (roles[i].name === "inspector" || roles[i].name === "admin") {
+        next();
+        return;
+      }
+    }
+    return respondError(
+      req,
+      res,
+      401,
+      "Se requiere un rol de inspector o administrador para realizar esta acci  n",
+    );
+  } catch (error) {
+    handleError(error, "authorization.middleware -> isInspectorOrAdmin");
+  }
+}
+
 module.exports = {
   isAdmin,
-  isInspector
+  isInspector,
+  isInspectorOrAdmin,
 };

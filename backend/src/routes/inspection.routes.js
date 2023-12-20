@@ -26,7 +26,7 @@ router.get("/rol/:rol", isInspector, inspectionController.getInspectionsByInspec
 
 router.get("/inspections//:inspectionId", inspectionController.getInspectionInfo);
 
-router.get('/:inspectionId', inspectionController.getInspectionDetailsById);
+router.get("/:inspectionId", inspectionController.getInspectionDetailsById);
 
 
 
@@ -41,6 +41,3 @@ router.post("/upload", isInspector, upload, (req, res) => {
 });
 
 module.exports = router;
-
-
-

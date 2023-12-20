@@ -4,7 +4,7 @@ const Joi = require("joi");
 const ROLES = require("../constants/roles.constants");
 
 /**
- * Esquema de validación para el cuerpo de la solicitud de usuario.
+ * Esquema de validaci  n para el cuerpo de la solicitud de usuario.
  * @constant {Object}
  */
 const inspectionBodySchema = Joi.object({
@@ -19,13 +19,11 @@ const inspectionBodySchema = Joi.object({
     "string.base": "la fecha tiene que ser de tipo string."
   }),
   observaciones: Joi.string().required().messages({
-    "string.empty": "La observacion no puede estar vacío.",
+    "string.empty": "La observacion no puede estar vac  o.",
     "any.required": "La observacion es obligatorio.",
     "string.base": "la Observacion",
   }),
-  
+
 });
-
-
 
 module.exports = { inspectionBodySchema };

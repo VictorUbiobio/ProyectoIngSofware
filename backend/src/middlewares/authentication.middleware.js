@@ -5,9 +5,9 @@ const { ACCESS_JWT_SECRET } = require("../config/configEnv");
 const { respondError } = require("../utils/resHandler");
 /**
  * Verifica el token de acceso
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
- * @param {Function} next - Función para continuar con la siguiente función
+ * @param {Function} next - Funci  n para continuar con la siguiente funci  n
  */
 const verifyJWT = (req, res, next) => {
   try {

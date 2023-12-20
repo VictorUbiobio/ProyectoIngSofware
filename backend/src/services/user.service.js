@@ -45,7 +45,7 @@ const { username, email, password, roles } = user;
       roles: myRole,
     });
     await newUser.save();
-
+    
     return [newUser, null];
   } catch (error) {
     handleError(error, "user.service -> createUser");
@@ -91,7 +91,7 @@ async function updateUser(id, user) {
     );
 
     if (!matchPassword) {
-      return [null, "La contraseña no coincide"];
+      return [null, "La contrasena no coincide"];
     }
 
     const rolesFound = await Role.find({ name: { $in: roles } });
@@ -131,15 +131,15 @@ async function deleteUser(id) {
   }
 }
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns
  */
 async function createFormulario(id, formulario) {
   try {
     const user = await User.findById(id);
-
+    
     if (!user) {
       return [null, "El usuario no existe"];
     }

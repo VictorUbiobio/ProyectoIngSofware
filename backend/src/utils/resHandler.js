@@ -1,10 +1,10 @@
 "use strict";
 /**
- * Envía una respuesta exitosa estandarizada.
+ * Env  a una respuesta exitosa estandarizada.
  * @function respondSuccess
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
- * @param {Number} statusCode - Código de estado para la operación
+ * @param {Number} statusCode - C  digo de estado para la operaci  n
  * @param {Object} data - Objeto que contiene los datos a enviar
  * @returns {JSON} - Objeto de respuesta JSON con el estado "Success" y los datos proporcionados
  */
@@ -16,15 +16,14 @@ function respondSuccess(req, res, statusCode = 200, data = {}) {
 }
 
 /**
- * Envía una respuesta de error estandarizada.
+ * Env  a una respuesta de error estandarizada.
  * @function respondError
- * @param {Object} req - El objeto de petición
+ * @param {Object} req - El objeto de petici  n
  * @param {Object} res - El objeto de respuesta
- * @param {Number} statusCode - Código de estado para la operación
- * @param {String} message - La descripción del motivo del error
- * @param {Object} details - Información adicional sobre el error
- * @returns {JSON} - El objeto de respuesta JSON con el estado "Error", el mensaje de error y los detalles proporcionados
- */
+ * @param {Number} statusCode - C  digo de estado para la operaci  n
+ * @param {String} message - La descripci  n del motivo del error
+ * @param {Object} details - Informaci  n adicional sobre el error
+ * @returns {JSON} - El objeto de respuesta JSON con el estado "Error", el mensaje de error y los det> */
 function respondError(
   req,
   res,
@@ -40,14 +39,13 @@ function respondError(
 }
 
 /**
- * Envía una respuesta de error interno estandarizada.
+ * Env  a una respuesta de error interno estandarizada.
  * @function respondInternalError
- * @param {Object} req - El objeto de petición
+ * @param {Object} req - El objeto de petici  n
  * @param {Object} res - El objeto de respuesta
- * @param {Number} statusCode - El código de estado para la operación
- * @param {String} message - La descripción del motivo del error
- * @returns {JSON} - El objeto de respuesta JSON con el estado "Error" y el mensaje de error proporcionados
- */
+ * @param {Number} statusCode - El c  digo de estado para la operaci  n
+ *  * @param {String} message - La descripci  n del motivo del error
+ * @returns {JSON} - El objeto de respuesta JSON con el estado "Error" y el mensaje de error proporci> */
 function respondInternalError(
   req,
   res,

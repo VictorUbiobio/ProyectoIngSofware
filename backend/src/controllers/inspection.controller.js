@@ -1,4 +1,3 @@
-
 const Inspection = require("../models/inspection.model");
 const mongoose = require("mongoose");
 const { handleError } = require("../utils/errorHandler");
@@ -8,13 +7,12 @@ const { inspectionBodySchema } = require("../schema/inspection.schema");
 const uploadMiddleware = require("../middlewares/archivo.middleware");
 const verifyJWT = require('../middlewares/authentication.middleware');
 
-
-// Función para crear una nueva inspección y asignarla a un inspector
+// Funci  n para crear una nueva inspecci  n y asignarla a un inspector
 async function createInspection(req, res) {
   try {
-    const { lugar, fecha, observaciones,rol , inspectorId } = req.body;
+    const { lugar, fecha, observaciones, rol, inspectorId } = req.body;
 
-    // Validar los datos usando el esquema de validación
+    // Validar los datos usando el esquema de validaci  n
     const { error } = inspectionBodySchema.validate({
       lugar,
       fecha,
@@ -25,7 +23,7 @@ async function createInspection(req, res) {
       return respondError(req, res, 400, error.message);
     }
 
-    // Crear una nueva inspección
+    // Crear una nueva inspecci  n
     const inspection = new Inspection({
       lugar,
       fecha,
@@ -34,20 +32,18 @@ async function createInspection(req, res) {
       inspector: inspectorId,
     });
 
-    // Guardar la inspección en la base de datos
+    // Guardar la inspecci  n en la base de datos
     const inspeccionGuardada = await inspection.save();
 
-    // Mostrar el ID de la inspección en la consola
-    console.log('ID de la inspección guardada:', inspeccionGuardada._id);
+    // Mostrar el ID de la inspecci  n en la consola
+    console.log("ID de la inspeccion guardada", inspeccionGuardada._id);
 
     respondSuccess(req, res, 201, inspeccionGuardada);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Error al crear la inspección." });
+    return res.status(500).json({ error: "Error al crear la inspecci  n." });
   }
 }
-
-
 
 async function addObservations(req, res) {
   try {
@@ -59,7 +55,7 @@ async function addObservations(req, res) {
     console.log("Observaciones:", observaciones);
 
 
-    // Buscar la inspección por el _id y actualizar las observaciones
+    // Buscar la inspecci  n por el _id y actualizar las observaciones
     const inspection = await Inspection.findOneAndUpdate(
       { _id: inspectionId },
       { observaciones },
@@ -67,7 +63,7 @@ async function addObservations(req, res) {
     );
 
     if (!inspection) {
-      return res.status(404).json({ error: "Inspección no encontrada." });
+      return res.status(404).json({ error: "Inspecci  n no encontrada." });
     }
     respondSuccess(req, res, 201, inspection);
     //return res.status(200).json(inspection);
@@ -79,21 +75,20 @@ async function addObservations(req, res) {
   }
 }
 
-
 async function changeInspectionStatus(req, res) {
   try {
     const { inspectionId } = req.params; // Usar req.params._id para obtener el _id del documento
     const { nuevoEstado } = req.body;
 
-    // Buscar la inspección por el _id del documento y actualizar el estado
+    // Buscar la inspecci  n por el _id del documento y actualizar el estado
     const inspection = await Inspection.findOneAndUpdate(
       { _id: inspectionId },
       { estado: nuevoEstado },
-      { new: true }
+      { new: true },
     );
 
     if (!inspection) {
-      return res.status(404).json({ error: "Inspección no encontrada." });
+      return res.status(404).json({ error: "Inspecci  n no encontrada." });
     }
     respondSuccess(req, res, 201, inspection);
     //return res.status(200).json(inspection);
@@ -101,7 +96,7 @@ async function changeInspectionStatus(req, res) {
     //handleError(error, "inspection.controller -> changueInspectionStatus");
     //respondError(req, res, 500, error.message);
     console.error(error);
-    return res.status(500).json({ error: "Error al cambiar el estado de la inspección." });
+    return res.status(500).json({ error: "Error al cambiar el estado de la inspecci  n." });
   }
 }
 
@@ -111,14 +106,14 @@ const getInspectionInfo = async (req, res) => {
     const inspection = await inspectionService.getInspectionInfo(inspectionId);
 
     if (!inspection) {
-      return res.status(404).json({ error: 'Inspección no encontrada' });
+      return res.status(404).json({ error: "Inspeccion no encontrada" });
     }
 
-    // Responder con los detalles de la inspección
+    // Responder con los detalles de la inspecci  n
     respondSuccess(req, res, 200, inspection);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Error al obtener detalles de la inspección.' });
+    return res.status(500).json({ error: "Error al obtener detalles de la inspecci  n." });
   }
 };
 
@@ -139,7 +134,6 @@ const getInspectionsByInspectorId = async (req, res) => {
   }
 };
 
-
 const getInspectionsByRol = async (req, res) => {
   try {
     const { rol } = req.params;
@@ -158,23 +152,20 @@ const getInspectionsByRol = async (req, res) => {
 
 // controllers/userController.js
 
-// Función para obtener el ID del usuario
+// Funci  n para obtener el ID del usuario
 async function getUserId(req, res) {
   try {
     // Accede al ID del usuario desde req.email o req.roles si es necesario
     const userId = req.email || req.roles[0]._id;
 
-    // Envía el ID del usuario como respuesta
+    // Env  a el ID del usuario como respuesta
     res.status(200).json({ userId });
   } catch (error) {
     // Manejo de errores
-    console.error('Error al obtener el ID del usuario:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    console.error("Error al obtener el ID del usuario:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 }
-
-
-
 
 async function uploadJPG(req, res) {
   try {
@@ -183,13 +174,13 @@ async function uploadJPG(req, res) {
         return res.status(400).json({ error: "Error al cargar el archivo." });
       }
 
-      const { inspectionId } = req.params; // Obtén el _id de la observación desde los parámetros
-      const archivoJPG = req.body.fileName; // Obtén el nombre del archivo desde el cuerpo de la solicitud
+      const { inspectionId } = req.params; // Obt  n el _id de la observaci  n desde los par  metros
+      const archivoJPG = req.body.fileName; // Obt  n el nombre del archivo desde el cuerpo de la sol>
 
       const inspection = await Inspection.findByIdAndUpdate(
         { _id: inspectionId },
         { archivoJPG },
-        { new: true }
+        { new: true },
       );
 
       if (!inspection) {
@@ -211,23 +202,23 @@ const getInspectionDetailsById = async (req, res) => {
   try {
     const { inspectionId } = req.params;
 
-    // Validar el ID de la inspección
+    // Validar el ID de la inspecci  n
     if (!mongoose.Types.ObjectId.isValid(inspectionId)) {
-      return res.status(400).json({ error: 'ID de inspección no válido' });
+      return res.status(400).json({ error: "ID de inspeccion no valido" });
     }
 
-    // Buscar la inspección por el ID en la base de datos
+    // Buscar la inspecci  n por el ID en la base de datos
     const inspection = await Inspection.findById(inspectionId);
 
     if (!inspection) {
-      return res.status(404).json({ error: 'Inspección no encontrada' });
+      return res.status(404).json({ error: "Inspeccion no encontrada" });
     }
 
-    // Responder con los detalles de la inspección
+    // Responder con los detalles de la inspecci  n
     res.status(200).json(inspection);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al obtener detalles de la inspección.' });
+    res.status(500).json({ error: "Error al obtener detalles de la inspeccion." });
   }
 };
 
@@ -241,7 +232,5 @@ module.exports = {
   getInspectionsByRol,
   getUserId,
   getInspectionInfo,
-  getInspectionDetailsById
+  getInspectionDetailsById,
 };
-
-

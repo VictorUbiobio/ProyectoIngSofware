@@ -8,7 +8,7 @@ const Domicilio = require("../models/domicilio.model");
 const asyncWrapper = require("../middlewares/asyncWrapper");
 /**
  * crea domicilio
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function createDomicilio(req, res) {
@@ -16,7 +16,7 @@ async function createDomicilio(req, res) {
     const { Ciudad, Calle, PDF, Usuario } = req.body;
 
 
-    // Crear una nueva inspección
+    // Crear una nueva inspecci  n
     const domicilio = new Domicilio({
       Ciudad,
       Calle,
@@ -24,11 +24,11 @@ async function createDomicilio(req, res) {
       Usuario,
     });
 
-    // Guardar la inspección en la base de datos
+    // Guardar la inspecci  n en la base de datos
     const domicilioGuardada = await domicilio.save();
 
-    // Mostrar el ID de la inspección en la consola
-    console.log("ID de la inspección guardada:", domicilioGuardada._id);
+    // Mostrar el ID de la inspecci  n en la consola
+    console.log("ID de la inspecci  n guardada:", domicilioGuardada._id);
 
     respondSuccess(req, res, 201, domicilioGuardada);
   } catch (error) {
@@ -39,7 +39,7 @@ async function createDomicilio(req, res) {
 
 /**
  * actualiza un domicilio por su id
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function updateDomicilio(req, res) {
@@ -80,8 +80,8 @@ const uploadPDF = asyncWrapper(async (req, res) => {
 
 
 /**
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 const getDomicilios = async (req, res) => {
   try {
@@ -94,9 +94,8 @@ const getDomicilios = async (req, res) => {
 };
 
 module.exports = {
-    createDomicilio,
-    updateDomicilio,
-    uploadPDF,
-    getDomicilios,
+  createDomicilio,
+  updateDomicilio,
+  uploadPDF,
+  getDomicilios,
 };
-

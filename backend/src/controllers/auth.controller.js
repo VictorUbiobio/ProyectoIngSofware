@@ -3,15 +3,15 @@
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const { handleError } = require("../utils/errorHandler");
 
-/** Servicios de autenticación */
+/** Servicios de autenticaci  n */
 const AuthServices = require("../services/auth.service");
 const { authLoginBodySchema } = require("../schema/auth.schema");
 
 /**
- * Inicia sesión con un usuario.
+ * Inicia sesi  n con un usuario.
  * @async
  * @function login
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function login(req, res) {
@@ -28,7 +28,7 @@ async function login(req, res) {
     // * Existen mas opciones de seguirdad para las cookies *//
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 d  as
     });
 
     respondSuccess(req, res, 200, { accessToken });
@@ -40,8 +40,8 @@ async function login(req, res) {
 
 /**
  * @name logout
- * @description Cierra la sesión del usuario
- * @param {Object} req - Objeto de petición
+ * @description Cierra la sesi  n del usuario
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  * @returns
  */
@@ -50,7 +50,7 @@ async function logout(req, res) {
     const cookies = req.cookies;
     if (!cookies?.jwt) return respondError(req, res, 400, "No hay token");
     res.clearCookie("jwt", { httpOnly: true });
-    respondSuccess(req, res, 200, { message: "Sesión cerrada correctamente" });
+    respondSuccess(req, res, 200, { message: "Sesi  n cerrada correctamente" });
   } catch (error) {
     handleError(error, "auth.controller -> logout");
     respondError(req, res, 400, error.message);
@@ -60,7 +60,7 @@ async function logout(req, res) {
 /**
  * @name refresh
  * @description Refresca el token de acceso
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function refresh(req, res) {

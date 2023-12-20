@@ -17,6 +17,3 @@ const inspectionSchema = new mongoose.Schema({
 const Inspection = mongoose.model("Inspection", inspectionSchema);
 
 module.exports = Inspection;
-
-
-

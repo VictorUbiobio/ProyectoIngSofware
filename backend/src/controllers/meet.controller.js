@@ -7,7 +7,7 @@ const { handleError } = require("../utils/errorHandler");
 
 /**
  * Obtiene todas las citas
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function getMeet(req, res) {
@@ -26,7 +26,7 @@ async function getMeet(req, res) {
 
 /**
  * Obtiene una cita por id
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function getMeetById(req, res) {
@@ -44,7 +44,7 @@ async function getMeetById(req, res) {
 
 /**
  * Crea una nueva cita
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function postMeet(req, res) {
@@ -69,7 +69,7 @@ async function postMeet(req, res) {
 
 /**
  * Encuentra las citas de un usuario
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function getMeetByUser(req, res) {
@@ -109,7 +109,7 @@ async function putMeet(req, res) {
 
 /**
  * Elimina una cita
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function deleteMeet(req, res) {
@@ -125,12 +125,11 @@ async function deleteMeet(req, res) {
   }
 }
 
-
 module.exports = {
-    getMeet,
-    postMeet,
-    getMeetById,
-    getMeetByUser,
-    deleteMeet,
-    putMeet,
+  getMeet,
+  postMeet,
+  getMeetById,
+  getMeetByUser,
+  deleteMeet,
+  putMeet,
 };

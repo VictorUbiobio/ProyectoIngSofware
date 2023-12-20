@@ -7,7 +7,7 @@ const { handleError } = require("../utils/errorHandler");
 
 /**
  * Obtiene todos los usuarios
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function getUsers(req, res) {
@@ -26,7 +26,7 @@ async function getUsers(req, res) {
 
 /**
  * Crea un nuevo usuario
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function createUser(req, res) {
@@ -49,7 +49,7 @@ async function createUser(req, res) {
 
 /**
  * Obtiene un usuario por su id
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function getUserById(req, res) {
@@ -57,7 +57,7 @@ async function getUserById(req, res) {
     const { params } = req;
     const { error: paramsError } = userIdSchema.validate(params);
     if (paramsError) return respondError(req, res, 400, paramsError.message);
-    
+
     const [user, errorUser] = await UserService.getUserById(params.id);
 
     if (errorUser) return respondError(req, res, 404, errorUser);
@@ -71,7 +71,7 @@ async function getUserById(req, res) {
 
 /**
  * Actualiza un usuario por su id
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function updateUser(req, res) {
@@ -96,7 +96,7 @@ async function updateUser(req, res) {
 
 /**
  * Elimina un usuario por su id
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function deleteUser(req, res) {
@@ -123,7 +123,7 @@ async function deleteUser(req, res) {
 
 /**
  * crea un formulario
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function createFormulario(req, res) {

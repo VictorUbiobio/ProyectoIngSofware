@@ -27,7 +27,7 @@ async function createDomicilio(Ciudad, Calle, PDF, usuarioId) {
 }
 
 /**
- * @param {Object} req - Objeto de petición
+ * @param {Object} req - Objeto de petici  n
  * @param {Object} res - Objeto de respuesta
  */
 async function updateDomicilio(id, domicilio) {

@@ -22,9 +22,9 @@ const getInspectionDetails = async (inspectionId) => {
   try {
     const inspection = await Inspection.findById(inspectionId);
 
-    // Si la inspección no existe, puedes manejarlo de la manera que prefieras
+    // Si la inspecci  n no existe, puedes manejarlo de la manera que prefieras
     if (!inspection) {
-      throw new Error('Inspección no encontrada');
+      throw new Error("Inspecci  n no encontrada");
     }
 
     return inspection;
@@ -42,7 +42,7 @@ async function addObservations(inspectionId, observaciones) {
     );
 
     if (!inspection) {
-      throw new Error("Inspección no encontrada.");
+      throw new Error("Inspecci  n no encontrada.");
     }
 
     return inspection;
@@ -56,12 +56,12 @@ async function changeInspectionStatus(inspectionId, nuevoEstado) {
   try {
     const inspection = await Inspection.findOneAndUpdate(
       { _id: inspectionId }, // condiciones para buscar el documento
-      { estado: nuevoEstado }, // actualización que se aplicará
-      { new: true }
+      { estado: nuevoEstado }, // actualizaci  n que se aplicar
+      { new: true },
     );
 
     if (!inspection) {
-      throw new Error("Inspección no encontrada.");
+      throw new Error("Inspecci  n no encontrada.");
     }
 
     return inspection;
@@ -96,8 +96,7 @@ async function getInspectionsByRol(rol) {
 const getInspectionInfo = async (inspectionId) => {
   try {
     const inspection = await Inspection.findOne(
-      { _id: inspectionId }, // Usamos _id como el campo para buscar, asumiendo que es el campo de identificación único
-      'lugar observaciones fecha estado' // Especificamos los campos que queremos obtener
+      { _id: inspectionId }, // Usamos _id como el campo para buscar, asumiendo que es el campo de id>      'lugar observaciones fecha estado' // Especificamos los campos que queremos obtener
     );
     return inspection;
   } catch (error) {
@@ -110,15 +109,15 @@ const getInspectionInfo = async (inspectionId) => {
 
 async function uploadJPG(inspectionId, archivoJPG) {
   try {
-    // Buscar la inspección por el ID y actualizar el campo archivoJPG
+    // Buscar la inspecci  n por el ID y actualizar el campo archivoJPG
     const inspection = await Inspection.findByIdAndUpdate(
       { _id: inspectionId },
       { archivoJPG },
-      { new: true }
+      { new: true },
     );
 
     if (!inspection) {
-      throw new Error("Inspección no encontrada.");
+      throw new Error("Inspecci  n no encontrada.");
     }
 
     return inspection;
@@ -132,7 +131,7 @@ const getUserById = async (userId) => {
     const user = await User.findById(userId);
     return user;
   } catch (error) {
-    console.error('Error al obtener el usuario por ID:', error);
+    console.error("Error al obtener el usuario por ID:", error);
     throw error;
   }
 };
@@ -147,6 +146,5 @@ module.exports = {
   getInspectionsByRol,
   getUserById,
   getInspectionDetails,
-  getInspectionInfo
+  getInspectionInfo,
 };
-
