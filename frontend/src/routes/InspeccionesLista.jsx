@@ -1,47 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getInspectionsByInspectorId } from '../services/inspector.service';
+import { getInspectionsByInspectorId } from '../services/InspectorService';
 import './InspeccionesLista.css';
-
 
 const InspeccionesLista = () => {
   const [inspecciones, setInspecciones] = useState([]);
   const { inspectorId } = useParams();
 
   useEffect(() => {
-    // Creamos una variable de referencia para rastrear la solicitud actual
-    let isCancelled = false;
-
     const fetchInspecciones = async () => {
       try {
         const response = await getInspectionsByInspectorId(inspectorId);
 
-        // Verificamos si la solicitud fue cancelada antes de actualizar el estado
-        if (!isCancelled) {
-          if (Array.isArray(response.data)) {
-            // Si la respuesta es un array, lo asignamos directamente a inspecciones
-            setInspecciones(response.data);
-            console.log('Inspecciones obtenidas:', response.data);
-          } else {
-            console.error('Error al obtener las inspecciones. Datos de la respuesta:', response);
-          }
+        if (Array.isArray(response.data)) {
+          // Si la respuesta es un array, lo asignamos directamente a inspecciones
+          setInspecciones(response.data);
+          console.log('Inspecciones obtenidas:', response.data);
+        } else {
+          console.error('Error al obtener las inspecciones. Datos de la respuesta:', response);
         }
       } catch (error) {
-        // Verificamos si la solicitud fue cancelada antes de manejar el error
-        if (!isCancelled) {
-          console.error('Error al obtener las inspecciones', error);
-        }
+        console.error('Error al obtener las inspecciones', error);
       }
     };
 
-    // Realizamos la solicitud cuando el componente se monta
     fetchInspecciones();
-
-    // Función de limpieza que se ejecuta cuando el componente se desmonta o cuando inspectorId cambia
-    return () => {
-      // Marcamos la solicitud actual como cancelada al limpiar
-      isCancelled = true;
-    };
   }, [inspectorId]);
 
   return (
@@ -62,7 +45,7 @@ const InspeccionesLista = () => {
                   <Link to={`/inspecciones/${inspeccion._id}`}>
                     {inspeccion.lugar} - {inspeccion.fecha}
                   </Link>
-                  <Link to={`/modificarinspeccion/${inspeccion._id}`}>
+                  <Link to={`/inspecciones/${inspeccion._id}`}>
                     <button>Modificar</button>
                   </Link>
                 </li>

@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 // authUtils.js
 export const ObtenerIdDelInspectorDesdeEstadoDeAutenticacion = () => {
   const user = JSON.parse(localStorage.getItem('user')) || {};

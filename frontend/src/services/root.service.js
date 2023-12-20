@@ -1,7 +1,8 @@
+// root.service.js
 import axios from 'axios';
 import cookies from 'js-cookie';
 
-const API_URL = import.meta.env.VITE_BASE_URL || 'http://146.83.198.35:1695/api';
+const API_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000/api';
 
 const instance = axios.create({
   baseURL: API_URL,
@@ -17,6 +18,13 @@ instance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Agrega el roleId a la solicitud si está disponible
+    const roleId = localStorage.getItem('user')?.roleId;
+    if (roleId) {
+      config.headers['X-Role-Id'] = roleId;
+    }
+
     return config;
   },
   (error) => Promise.reject(error)

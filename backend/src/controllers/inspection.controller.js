@@ -241,7 +241,7 @@ module.exports = {
   getInspectionsByRol,
   getUserId,
   getInspectionInfo,
-  getInspectionDetailsById,
+  getInspectionDetailsById
 };
 
 

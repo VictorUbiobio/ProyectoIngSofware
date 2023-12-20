@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './ModificarInspeccion.jsx';
 
 const ModificarInspeccion = () => {
   const { inspectionId } = useParams();
@@ -112,3 +111,4 @@ const ModificarInspeccion = () => {
 };
 
 export default ModificarInspeccion;
+

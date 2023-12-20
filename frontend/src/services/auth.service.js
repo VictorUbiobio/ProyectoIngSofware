@@ -13,9 +13,7 @@ export const login = async ({ email, password }) => {
       const { email, roles, id } = await jwtDecode(data.data.accessToken);
       localStorage.setItem('user', JSON.stringify({ email, roles, id }));
       console.log(id);
-      axios.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${data.data.accessToken}`;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.data.accessToken}`;
       cookies.set('jwt-auth', data.data.accessToken, { path: '/' });
     }
   } catch (error) {

@@ -24,7 +24,7 @@ const getInspectionDetails = async (inspectionId) => {
 
     // Si la inspección no existe, puedes manejarlo de la manera que prefieras
     if (!inspection) {
-      throw new Error("Inspección no encontrada");
+      throw new Error('Inspección no encontrada');
     }
 
     return inspection;
@@ -57,7 +57,7 @@ async function changeInspectionStatus(inspectionId, nuevoEstado) {
     const inspection = await Inspection.findOneAndUpdate(
       { _id: inspectionId }, // condiciones para buscar el documento
       { estado: nuevoEstado }, // actualización que se aplicará
-      { new: true },
+      { new: true }
     );
 
     if (!inspection) {
@@ -114,7 +114,7 @@ async function uploadJPG(inspectionId, archivoJPG) {
     const inspection = await Inspection.findByIdAndUpdate(
       { _id: inspectionId },
       { archivoJPG },
-      { new: true },
+      { new: true }
     );
 
     if (!inspection) {
@@ -132,7 +132,7 @@ const getUserById = async (userId) => {
     const user = await User.findById(userId);
     return user;
   } catch (error) {
-    console.error("Error al obtener el usuario por ID:", error);
+    console.error('Error al obtener el usuario por ID:', error);
     throw error;
   }
 };
@@ -147,6 +147,6 @@ module.exports = {
   getInspectionsByRol,
   getUserById,
   getInspectionDetails,
-  getInspectionInfo,
+  getInspectionInfo
 };
 
